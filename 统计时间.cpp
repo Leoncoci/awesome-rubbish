@@ -1,25 +1,26 @@
 #include<stdio.h>
 #include<windows.h>
-int main(){
-	LARGE_INTEGER litmp;
-	double frequency,runTime,minus;//CPUÊ±ÖÓÆµÂÊ£¬ÔËĞĞÊ±¼ä£¬ÔËĞĞÖÜÆÚÊıÖ®²î
- 	LONGLONG timeStart,timeEnd;//ÅÅĞòÇ°ÖÜÆÚÊı£¬ÅÅĞòÖ´ĞĞºóÖÜÆÚÊı
- 	QueryPerformanceFrequency(&litmp);
+/*ç”³æ˜è®¡æ—¶ç”¨å…¨å±€å˜é‡*/ 
+LARGE_INTEGER litmp;
+double frequency,runTime,minus;
+LONGLONG timeStart,timeEnd;
+
+void time_count_start(){//å¼€å§‹è®¡æ—¶ 
+	QueryPerformanceFrequency(&litmp);
   	frequency=(double) litmp.QuadPart;
   	QueryPerformanceCounter(&litmp);
   	timeStart=litmp.QuadPart;
-  
-  	int a,b;
-  	a=1;
-  	b=0;
-  	int temp;
-  	temp = a;
-  	a = b;
-  	b = temp;
- 
- 	QueryPerformanceCounter(&litmp);
+}
+void time_count_end(){	//è®¡ç®—ä»ä¸Šæ¬¡è®¡æ—¶åˆ°ç»“æŸçš„è¿è¡Œæ—¶é—´ 
+	QueryPerformanceCounter(&litmp);
  	timeEnd=litmp.QuadPart;
  	minus=(double)(timeEnd-timeStart);
  	runTime=minus/frequency;
- 	printf("%lf",runTime);
-} 
+}
+
+int main(){
+	time_count_start(); //å†™åœ¨å¼€å§‹æŸä¸ªæ—¶é—´ç»Ÿè®¡ä¹‹å‰
+	//TODO è¦ç»Ÿè®¡è¿è¡Œæ—¶é—´çš„ç¨‹åº
+	time_count_end(); 
+	printf("%lf",runTime);
+}
